@@ -1,0 +1,23 @@
+movies:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/movies.csv
+  load_args: {sep: ",", encoding: "utf-8"}
+  save_args: {index: False}
+
+releases:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/releases.csv
+  load_args: {sep: ",", encoding: "utf-8"}
+  save_args: {index: False}
+
+genres:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/genres.csv
+  load_args: {sep: ",", encoding: "utf-8"}
+  save_args: {index: False}
+
+countries:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/countries.csv
+  load_args: {sep: ",", encoding: "utf-8"}
+  save_args: {index: False}
