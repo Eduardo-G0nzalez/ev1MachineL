@@ -155,46 +155,6 @@ kedro info
 - **Jupyter**: Notebooks interactivos
 - **NumPy**: Cálculos numéricos
 
-## 🧪 Testing
-
-```bash
-# Ejecutar todos los tests
-pytest
-
-# Ejecutar con cobertura
-pytest --cov=src/letterboxdml
-
-# Ejecutar tests específicos
-pytest tests/test_run.py
-```
-
-## 📝 Desarrollo
-
-### Agregar Nuevas Funcionalidades
-
-1. Crear nuevos pipelines en `src/letterboxdml/pipelines/`
-2. Actualizar configuraciones en `conf/`
-3. Agregar tests en `tests/`
-4. Documentar cambios en este README
-
-### Estructura de Commits
-
-```
-feat: nueva funcionalidad
-fix: corrección de bug
-docs: actualización de documentación
-style: cambios de formato
-refactor: refactorización de código
-test: agregar o modificar tests
-```
-
-## 🤝 Contribuciones
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 ## 📄 Licencia
 
@@ -202,16 +162,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👨‍💻 Autor
 
-**Mathias Jara**  
-*Full Stack Developer*  
-📧 mathias.jara@hotmail.com
+**Mathias Jara**
+**Eduardo Gonzalez**
 
-## 🙏 Agradecimientos
 
-- [Kedro](https://kedro.readthedocs.io/) por el framework de data engineering
-- [Letterboxd](https://letterboxd.com/) por los datos cinematográficos
-- Comunidad de Python por las librerías de análisis de datos
-
----
-
-⭐ **¡No olvides darle una estrella al proyecto si te resulta útil!** ⭐
