@@ -143,24 +143,6 @@ kedro info
 - **NumPy**: Cálculos numéricos
 
 
-## 🧪 Testing
-
-```bash
-# Ejecutar todos los tests
-uv run pytest
-
-# Ejecutar con cobertura
-uv run pytest --cov=src/letterboxdml
-
-# Ejecutar tests específicos
-uv run pytest tests/test_run.py
-
-# O con entorno virtual activado
-pytest
-pytest --cov=src/letterboxdml
-pytest tests/test_run.py
-```
-
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
