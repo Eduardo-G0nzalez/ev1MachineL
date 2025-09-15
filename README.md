@@ -101,10 +101,7 @@ ev1MachineL/
 ### Ejecutar el Pipeline Completo
 
 ```bash
-# Usando uv (recomendado)
-uv run kedro run
-
-# O con entorno virtual activado
+# Entorno virtual activado
 kedro run
 ```
 
@@ -112,32 +109,13 @@ kedro run
 
 ```bash
 # Iniciar Jupyter Notebook (método principal)
-uv run jupyter notebook --notebook-dir=notebooks --port=8888
-
-# O usando Kedro
-uv run kedro jupyter notebook
-
-# Iniciar JupyterLab
-uv run kedro jupyter lab
-```
-
-### Ejecutar Tests
-
-```bash
-# Usando uv
-uv run pytest
-
-# O con entorno virtual activado
-pytest
+jupyter notebook
 ```
 
 ### Ver Información del Proyecto
 
 ```bash
-# Usando uv
-uv run kedro info
-
-# O con entorno virtual activado
+# Con entorno virtual activado
 kedro info
 ```
 
@@ -190,31 +168,6 @@ pytest
 pytest --cov=src/letterboxdml
 pytest tests/test_run.py
 ```
-
-## ⚡ Inicio Rápido
-
-### Para usuarios que quieren empezar inmediatamente:
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/Eduardo-G0nzalez/ev1MachineL.git
-cd ev1MachineL
-
-# 2. Instalar uv (si no lo tienes)
-pip install uv
-
-# 3. Crear entorno virtual e instalar dependencias
-uv sync
-
-# 4. Activar entorno virtual
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-
-# 5. Iniciar Jupyter Notebooks
-uv run jupyter notebook --notebook-dir=notebooks --port=8888
-```
-
-**Acceso:** `http://localhost:8888`
 
 ## 📄 Licencia
 
