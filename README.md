@@ -67,10 +67,10 @@ uv sync --no-install-project
 source .venv/bin/activate
 ```
 
-### 5. Ejecutar jupyter
+### 5. Verificar instalación kedro
 
 ```bash
-jupyter notebook
+kedro info
 ```
 
 ## 📁 Estructura del Proyecto
