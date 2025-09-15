@@ -30,34 +30,21 @@ Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analiz
 - Git
 - [uv](https://docs.astral.sh/uv/) (Astra) - Gestor de paquetes moderno
 
-### 1. Instalar uv (Astra)
-
-```bash
-# En Windows (PowerShell)
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-# En macOS/Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# O usando pip
-pip install uv
-```
-
-### 2. Clonar el Repositorio
+### 1. Clonar el Repositorio
 
 ```bash
 git clone https://github.com/Eduardo-G0nzalez/ev1MachineL.git
 cd ev1MachineL
 ```
 
-### 3. Crear Entorno Virtual e Instalar Dependencias
+### 2. Crear Entorno Virtual e Instalar Dependencias
 
 ```bash
 # Crear entorno virtual e instalar todas las dependencias automáticamente
 uv sync --no-install-project
 ```
 
-### 4. Activar Entorno Virtual
+### 3. Activar Entorno Virtual
 
 ```bash
 # En Windows
@@ -67,7 +54,7 @@ uv sync --no-install-project
 source .venv/bin/activate
 ```
 
-### 5. Verificar instalación kedro
+### 4. Verificar instalación kedro
 
 ```bash
 kedro info
