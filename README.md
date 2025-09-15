@@ -54,7 +54,7 @@ cd ev1MachineL
 
 ```bash
 # Crear entorno virtual e instalar todas las dependencias automáticamente
-uv sync
+uv sync --no-install-project
 ```
 
 ### 4. Activar Entorno Virtual
@@ -67,11 +67,10 @@ uv sync
 source .venv/bin/activate
 ```
 
-### 5. Verificar Instalación
+### 5. Ejecutar jupyer
 
 ```bash
-# Verificar que Kedro esté instalado correctamente
-uv run kedro info
+jupyter notebook
 ```
 
 ## 📁 Estructura del Proyecto
