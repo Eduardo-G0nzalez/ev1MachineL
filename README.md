@@ -223,16 +223,6 @@ uv run jupyter notebook --notebook-dir=notebooks --port=8888
 
 **Acceso:** `http://localhost:8888`
 
-## 📝 Desarrollo
-
-### Agregar Nuevas Funcionalidades
-
-1. Crear nuevos pipelines en `src/letterboxdml/pipelines/`
-2. Actualizar configuraciones en `conf/`
-3. Agregar tests en `tests/`
-4. Documentar cambios en este README
-
-
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
