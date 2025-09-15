@@ -179,6 +179,7 @@ kedro info
 - **Jupyter**: Notebooks interactivos
 - **NumPy**: Cálculos numéricos
 
+<<<<<<< HEAD
 ## 🧪 Testing
 
 ```bash
@@ -249,6 +250,8 @@ test: agregar o modificar tests
 3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
+=======
+>>>>>>> 00603b08cac3810816e3b7dbda2edcdfe4214870
 
 ## 📄 Licencia
 
@@ -256,16 +259,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👨‍💻 Autor
 
-**Mathias Jara**  
-*Full Stack Developer*  
-📧 mathias.jara@hotmail.com
+**Mathias Jara**
+**Eduardo Gonzalez**
 
-## 🙏 Agradecimientos
 
-- [Kedro](https://kedro.readthedocs.io/) por el framework de data engineering
-- [Letterboxd](https://letterboxd.com/) por los datos cinematográficos
-- Comunidad de Python por las librerías de análisis de datos
-
----
-
-⭐ **¡No olvides darle una estrella al proyecto si te resulta útil!** ⭐
