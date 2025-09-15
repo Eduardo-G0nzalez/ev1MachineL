@@ -2,6 +2,10 @@
 from kedro.pipeline import Pipeline, node, pipeline
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore')
 
 
 def clean_data(releases, countries, genres):
@@ -119,6 +123,291 @@ def format_final_data(final_df):
     return final_df
 
 
+def create_cleaning_visualizations(releases, countries, genres, releases_clean, countries_clean, genres_clean, min_release):
+    """Crea visualizaciones del proceso de limpieza y transformación."""
+    # Configuración de gráficos
+    plt.style.use('default')
+    sns.set_palette("husl")
+    plt.rcParams['figure.figsize'] = (16, 12)
+    plt.rcParams['font.size'] = 10
+
+    # Crear figura con subplots para mostrar el proceso de limpieza
+    fig, axes = plt.subplots(3, 2, figsize=(20, 18))
+    fig.suptitle('Proceso de Limpieza y Transformación de Datos', fontsize=16, fontweight='bold')
+
+    # 1. Antes y después de la limpieza - Conteo de registros
+    datasets_info = {
+        'Original': {
+            'releases': len(releases),
+            'countries': len(countries),
+            'genres': len(genres)
+        },
+        'Después de Limpieza': {
+            'releases': len(releases_clean),
+            'countries': len(countries_clean),
+            'genres': len(genres_clean)
+        }
+    }
+
+    # Crear DataFrame para visualización
+    comparison_data = []
+    for stage, datasets in datasets_info.items():
+        for dataset, count in datasets.items():
+            comparison_data.append({'Etapa': stage, 'Dataset': dataset, 'Registros': count})
+
+    comparison_df = pd.DataFrame(comparison_data)
+    comparison_pivot = comparison_df.pivot(index='Dataset', columns='Etapa', values='Registros')
+
+    # Gráfico de barras comparativo
+    x = np.arange(len(comparison_pivot.index))
+    width = 0.35
+
+    axes[0,0].bar(x - width/2, comparison_pivot['Original'], width, label='Original', alpha=0.7, color='lightcoral')
+    axes[0,0].bar(x + width/2, comparison_pivot['Después de Limpieza'], width, label='Después de Limpieza', alpha=0.7, color='lightgreen')
+    axes[0,0].set_title('Conteo de Registros: Antes vs Después de Limpieza')
+    axes[0,0].set_ylabel('Número de Registros')
+    axes[0,0].set_xticks(x)
+    axes[0,0].set_xticklabels(comparison_pivot.index)
+    axes[0,0].legend()
+    axes[0,0].grid(True, alpha=0.3)
+
+    # 2. Análisis de fechas - Distribución temporal antes y después del filtrado
+    releases_original = releases.copy()
+    releases_original['date_parsed'] = pd.to_datetime(releases_original['date'], errors='coerce')
+    releases_original = releases_original.dropna(subset=['date_parsed'])
+    releases_original['year'] = releases_original['date_parsed'].dt.year
+
+    # Filtrar años razonables para visualización
+    releases_original = releases_original[(releases_original['year'] >= 1900) & (releases_original['year'] <= 2025)]
+
+    # Datos después de la limpieza
+    releases_clean_temp = releases_clean.copy()
+    # Asegurar que _date_parsed sea datetime
+    releases_clean_temp['_date_parsed'] = pd.to_datetime(releases_clean_temp['_date_parsed'])
+    releases_clean_temp['year'] = releases_clean_temp['_date_parsed'].dt.year
+
+    # Crear histogramas comparativos superpuestos
+    axes[0,1].hist(releases_original['year'], bins=50, alpha=0.6, label='Original', color='lightcoral', edgecolor='black')
+    axes[0,1].hist(releases_clean_temp['year'], bins=50, alpha=0.6, label='Después de Limpieza', color='lightgreen', edgecolor='black')
+    axes[0,1].set_title('Distribución Temporal: Antes vs Después de Limpieza')
+    axes[0,1].set_xlabel('Año')
+    axes[0,1].set_ylabel('Frecuencia')
+    axes[0,1].legend()
+    axes[0,1].grid(True, alpha=0.3)
+
+    # 3. Análisis de normalización de países - Variantes de USA
+    # Verificar que la columna is_us existe
+    if 'is_us' in countries_clean.columns:
+        us_variants = countries_clean[countries_clean['is_us']]['country'].value_counts()
+        if len(us_variants) > 0:
+            axes[1,0].pie(us_variants.values, labels=us_variants.index, autopct='%1.1f%%', startangle=90)
+            axes[1,0].set_title('Variantes de Estados Unidos Detectadas')
+        else:
+            axes[1,0].text(0.5, 0.5, 'No se encontraron variantes de USA', ha='center', va='center')
+            axes[1,0].set_title('Variantes de Estados Unidos Detectadas')
+    else:
+        axes[1,0].text(0.5, 0.5, 'Columna is_us no encontrada', ha='center', va='center')
+        axes[1,0].set_title('Variantes de Estados Unidos Detectadas')
+
+    # 4. Distribución de décadas después del filtrado temporal
+    decade_counts = min_release['decade'].value_counts()
+    colors = ['lightblue', 'lightcoral', 'lightgray']
+    axes[1,1].bar(decade_counts.index, decade_counts.values, color=colors[:len(decade_counts)], alpha=0.7)
+    axes[1,1].set_title('Distribución de Películas por Década (Después del Filtrado)')
+    axes[1,1].set_ylabel('Número de Películas')
+    axes[1,1].grid(True, alpha=0.3)
+
+    # 5. Análisis de duplicados removidos
+    duplicates_info = {
+        'releases': len(releases) - len(releases.drop_duplicates(subset=['id', 'date'])),
+        'countries': len(countries) - len(countries.drop_duplicates(subset=['id', 'country'])),
+        'genres': len(genres) - len(genres.drop_duplicates(subset=['id', 'genre']))
+    }
+
+    duplicates_df = pd.DataFrame(list(duplicates_info.items()), columns=['Dataset', 'Duplicados_Removidos'])
+    axes[2,0].bar(duplicates_df['Dataset'], duplicates_df['Duplicados_Removidos'], color='orange', alpha=0.7)
+    axes[2,0].set_title('Duplicados Removidos por Dataset')
+    axes[2,0].set_ylabel('Número de Duplicados')
+    axes[2,0].grid(True, alpha=0.3)
+
+    # 6. Resumen de la integración final
+    us_movies_count = len(countries_clean[countries_clean['is_us']]['id'].unique()) if 'is_us' in countries_clean.columns else 0
+    decade_movies_count = len(min_release[min_release['decade'].isin(['2000s', '2010s'])]) if 'decade' in min_release.columns else 0
+    unique_genres_count = genres_clean['genre'].nunique() if 'genre' in genres_clean.columns else 0
+    
+    integration_stats = {
+        'Películas EE.UU.': us_movies_count,
+        'Películas en 2000s/2010s': decade_movies_count,
+        'Géneros Únicos': unique_genres_count
+    }
+
+    stats_df = pd.DataFrame(list(integration_stats.items()), columns=['Métrica', 'Valor'])
+    axes[2,1].barh(stats_df['Métrica'], stats_df['Valor'], color='lightblue', alpha=0.7)
+    axes[2,1].set_title('Estadísticas de Integración Final')
+    axes[2,1].set_xlabel('Valor')
+    axes[2,1].grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('data/08_reporting/cleaning_process.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+    return {"cleaning_visualizations": "completed"}
+
+
+def create_comparative_analysis(final_df):
+    """Crea análisis comparativo detallado entre décadas 2000s y 2010s."""
+    # Configuración de gráficos
+    plt.style.use('default')
+    sns.set_palette("husl")
+    plt.rcParams['figure.figsize'] = (18, 12)
+    plt.rcParams['font.size'] = 10
+
+    # Preparar datos para análisis comparativo
+    decade_2000s = final_df[final_df['decade'] == '2000s']
+    decade_2010s = final_df[final_df['decade'] == '2010s']
+
+    # Crear figura con subplots para análisis comparativo
+    fig, axes = plt.subplots(2, 3, figsize=(20, 12))
+    fig.suptitle('Análisis Comparativo: Década 2000s vs 2010s', fontsize=16, fontweight='bold')
+
+    # 1. Conteo de películas por década
+    decade_counts = final_df['decade'].value_counts()
+    colors = ['lightblue', 'lightcoral']
+    bars = axes[0,0].bar(decade_counts.index, decade_counts.values, color=colors, alpha=0.7)
+    axes[0,0].set_title('Número de Películas por Década')
+    axes[0,0].set_ylabel('Número de Películas')
+    axes[0,0].grid(True, alpha=0.3)
+
+    # 2. Top 10 géneros por década - Comparación lado a lado
+    top_genres_2000s = decade_2000s['genre'].value_counts().head(10)
+    top_genres_2010s = decade_2010s['genre'].value_counts().head(10)
+
+    # Crear DataFrame para comparación
+    comparison_genres = pd.DataFrame({
+        '2000s': top_genres_2000s,
+        '2010s': top_genres_2010s
+    }).fillna(0)
+
+    # Gráfico de barras horizontal lado a lado
+    x = np.arange(len(comparison_genres.index))
+    width = 0.35
+
+    axes[0,1].barh(x - width/2, comparison_genres['2000s'], width, label='2000s', alpha=0.7, color='lightblue')
+    axes[0,1].barh(x + width/2, comparison_genres['2010s'], width, label='2010s', alpha=0.7, color='lightcoral')
+    axes[0,1].set_title('Top 10 Géneros por Década')
+    axes[0,1].set_xlabel('Número de Películas')
+    axes[0,1].set_yticks(x)
+    axes[0,1].set_yticklabels(comparison_genres.index)
+    axes[0,1].legend()
+    axes[0,1].grid(True, alpha=0.3)
+
+    # 3. Distribución de géneros - Gráfico de pastel comparativo
+    top5_2000s = decade_2000s['genre'].value_counts().head(5)
+    top5_2010s = decade_2010s['genre'].value_counts().head(5)
+
+    # Pastel para 2000s
+    wedges1, texts1, autotexts1 = axes[0,2].pie(top5_2000s.values, labels=top5_2000s.index, autopct='%1.1f%%', 
+                                       startangle=90, colors=plt.cm.Blues(np.linspace(0.3, 0.8, len(top5_2000s))))
+    axes[0,2].set_title('Top 5 Géneros - Década 2000s')
+
+    # 4. Cambio en popularidad de géneros (2000s vs 2010s)
+    all_genres = set(decade_2000s['genre'].unique()) | set(decade_2010s['genre'].unique())
+    genre_changes = []
+
+    for genre in all_genres:
+        count_2000s = len(decade_2000s[decade_2000s['genre'] == genre])
+        count_2010s = len(decade_2010s[decade_2010s['genre'] == genre])
+        
+        if count_2000s > 0:
+            change_pct = ((count_2010s - count_2000s) / count_2000s) * 100
+        else:
+            change_pct = 100 if count_2010s > 0 else 0
+        
+        genre_changes.append({
+            'genre': genre,
+            'count_2000s': count_2000s,
+            'count_2010s': count_2010s,
+            'change_pct': change_pct
+        })
+
+    changes_df = pd.DataFrame(genre_changes)
+    changes_df = changes_df.sort_values('change_pct', ascending=False)
+
+    # Top 10 géneros con mayor cambio (crecimiento o declive)
+    top_changes = changes_df.head(10)
+    colors = ['green' if x > 0 else 'red' for x in top_changes['change_pct']]
+
+    bars = axes[1,0].barh(range(len(top_changes)), top_changes['change_pct'], color=colors, alpha=0.7)
+    axes[1,0].set_title('Top 10 Géneros con Mayor Cambio (2000s → 2010s)')
+    axes[1,0].set_xlabel('Cambio Porcentual (%)')
+    axes[1,0].set_yticks(range(len(top_changes)))
+    axes[1,0].set_yticklabels(top_changes['genre'])
+    axes[1,0].axvline(x=0, color='black', linestyle='--', alpha=0.5)
+    axes[1,0].grid(True, alpha=0.3)
+
+    # 5. Distribución de géneros por película por década
+    movies_2000s = decade_2000s.groupby('id').size()
+    movies_2010s = decade_2010s.groupby('id').size()
+
+    # Crear histogramas comparativos
+    axes[1,1].hist([movies_2000s.values, movies_2010s.values], bins=15, alpha=0.6, 
+                   label=['2000s', '2010s'], color=['lightblue', 'lightcoral'], edgecolor='black')
+    axes[1,1].set_title('Distribución de Géneros por Película')
+    axes[1,1].set_xlabel('Número de Géneros por Película')
+    axes[1,1].set_ylabel('Número de Películas')
+    axes[1,1].legend()
+    axes[1,1].grid(True, alpha=0.3)
+
+    # 6. Pastel para 2010s
+    wedges2, texts2, autotexts2 = axes[1,2].pie(top5_2010s.values, labels=top5_2010s.index, autopct='%1.1f%%', 
+                                       startangle=90, colors=plt.cm.Reds(np.linspace(0.3, 0.8, len(top5_2010s))))
+    axes[1,2].set_title('Top 5 Géneros - Década 2010s')
+
+    plt.tight_layout()
+    plt.savefig('data/08_reporting/comparative_analysis.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+    # Estadísticas comparativas detalladas
+    print("=== ANÁLISIS COMPARATIVO DETALLADO ===")
+    print(f"\nPELÍCULAS:")
+    print(f"2000s: {len(decade_2000s['id'].unique()):,} películas")
+    print(f"2010s: {len(decade_2010s['id'].unique()):,} películas")
+    print(f"Crecimiento: {((len(decade_2010s['id'].unique()) - len(decade_2000s['id'].unique())) / len(decade_2000s['id'].unique()) * 100):.1f}%")
+
+    print(f"\nGÉNEROS:")
+    print(f"Géneros únicos en 2000s: {decade_2000s['genre'].nunique()}")
+    print(f"Géneros únicos en 2010s: {decade_2010s['genre'].nunique()}")
+
+    print(f"\nGÉNEROS MÁS POPULARES:")
+    print("2000s:", list(top_genres_2000s.head(3).index))
+    print("2010s:", list(top_genres_2010s.head(3).index))
+
+    print(f"\nGÉNEROS CON MAYOR CRECIMIENTO:")
+    top_growth = changes_df.head(3)
+    for _, row in top_growth.iterrows():
+        print(f"{row['genre']}: {row['change_pct']:.1f}% ({row['count_2000s']} → {row['count_2010s']})")
+
+    print(f"\nGÉNEROS CON MAYOR DECLIVE:")
+    top_decline = changes_df.tail(3)
+    for _, row in top_decline.iterrows():
+        print(f"{row['genre']}: {row['change_pct']:.1f}% ({row['count_2000s']} → {row['count_2010s']})")
+
+    print(f"\nGÉNEROS POR PELÍCULA (PROMEDIO):")
+    print(f"2000s: {movies_2000s.mean():.2f} géneros por película")
+    print(f"2010s: {movies_2010s.mean():.2f} géneros por película")
+
+    return {"comparative_analysis": "completed"}
+
+
+def save_final_parquet(final_df):
+    """Guarda el dataset final en formato Parquet."""
+    # Guardar versión limpia en Parquet
+    final_df.to_parquet("data/03_primary/final_df_us_2000s_2010s.parquet", index=False)
+    print("Guardado: final_df_us_2000s_2010s.parquet")
+    
+    return {"parquet_saved": "completed"}
+
+
 def create_data_preparation_pipeline() -> Pipeline:
     """Crea el pipeline de preparación de datos."""
     return pipeline([
@@ -145,5 +434,23 @@ def create_data_preparation_pipeline() -> Pipeline:
             inputs=["integrated_data"],
             outputs="final_df",
             name="format_final_data"
+        ),
+        node(
+            func=create_cleaning_visualizations,
+            inputs=["releases", "countries", "genres", "releases_clean", "countries_clean", "genres_clean", "min_release"],
+            outputs="cleaning_visualizations",
+            name="create_cleaning_visualizations"
+        ),
+        node(
+            func=create_comparative_analysis,
+            inputs=["final_df"],
+            outputs="comparative_analysis",
+            name="create_comparative_analysis"
+        ),
+        node(
+            func=save_final_parquet,
+            inputs=["final_df"],
+            outputs="parquet_saved",
+            name="save_final_parquet"
         )
     ])

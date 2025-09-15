@@ -69,3 +69,57 @@ eda_basic_info:
 eda_central_tendency:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/eda_central_tendency.pkl
+
+eda_dispersion:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_dispersion.pkl
+
+eda_position_measures:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_position_measures.pkl
+
+eda_quality_visualizations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_quality_visualizations.pkl
+
+eda_temporal_analysis:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_temporal_analysis.pkl
+
+eda_genre_analysis:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_genre_analysis.pkl
+
+# Resultados de Preparación de Datos (Fase 3)
+cleaning_visualizations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/cleaning_visualizations.pkl
+
+comparative_analysis:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/comparative_analysis.pkl
+
+parquet_saved:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/parquet_saved.pkl
+
+# Archivos de reportes (imágenes)
+quality_analysis:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/quality_analysis.png
+
+temporal_analysis:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/temporal_analysis.png
+
+genre_analysis:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/genre_analysis.png
+
+cleaning_process:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/cleaning_process.png
+
+comparative_analysis_chart:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/comparative_analysis.png
