@@ -160,3 +160,57 @@ venv.bak/
 
 # mlflow local runs
 mlruns/*
+
+##########################
+# PROJECT SPECIFIC
+
+# Jupyter notebook outputs (keep notebooks but not outputs)
+*.ipynb_checkpoints/
+
+# Data files (keep structure but not actual data)
+data/01_raw/*.csv
+data/01_raw/*.parquet
+data/02_intermediate/*.csv
+data/02_intermediate/*.pkl
+data/03_primary/*.csv
+data/04_feature/*.csv
+data/05_model_input/*.csv
+data/06_models/*.pkl
+data/06_models/*.joblib
+data/07_model_output/*.csv
+data/08_reporting/*.html
+data/08_reporting/*.png
+
+# Keep data folder structure
+!data/**/.gitkeep
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp

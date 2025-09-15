@@ -1,23 +1,71 @@
+# Datasets raw
 movies:
   type: pandas.CSVDataset
   filepath: data/01_raw/movies.csv
-  load_args: {sep: ",", encoding: "utf-8"}
-  save_args: {index: False}
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
 
 releases:
   type: pandas.CSVDataset
   filepath: data/01_raw/releases.csv
-  load_args: {sep: ",", encoding: "utf-8"}
-  save_args: {index: False}
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
 
 genres:
   type: pandas.CSVDataset
   filepath: data/01_raw/genres.csv
-  load_args: {sep: ",", encoding: "utf-8"}
-  save_args: {index: False}
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
 
 countries:
   type: pandas.CSVDataset
   filepath: data/01_raw/countries.csv
-  load_args: {sep: ",", encoding: "utf-8"}
-  save_args: {index: False}
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# Datasets intermedios (Fase 3)
+releases_clean:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/releases_clean.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+countries_clean:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/countries_clean.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+genres_clean:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/genres_clean.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+min_release:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/min_release.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+integrated_data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/integrated_data.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# Dataset final
+final_df:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/final_df.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# Resultados de EDA (Fase 2)
+eda_basic_info:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_basic_info.pkl
+
+eda_central_tendency:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_central_tendency.pkl
