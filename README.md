@@ -18,9 +18,9 @@ Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analiz
 
 ### 📊 Datasets a descargar
 - **Fuente**: https://www.kaggle.com/datasets/gsimonx37/letterboxd
-- **releases**: Eventos de estreno por película y país (1.3M+ registros)
-- **genres**: Asignaciones película-género (1M+ registros)
-- **countries**: Asociaciones película-país (693K+ registros)
+- **releases.csv**: Eventos de estreno por película y país (1.3M+ registros)
+- **genres.csv**: Asignaciones película-género (1M+ registros)
+- **countries.csv**: Asociaciones película-país (693K+ registros)
 
 ## 🚀 Instalación y Configuración
 
