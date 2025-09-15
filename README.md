@@ -60,9 +60,9 @@ source .venv/bin/activate
 kedro info
 ```
 
-### 5. Verificar instalación kedro
+### 5. Carga de los dataset
 
-Mover los 3 csv (**countries.csv**, **releases.csv** y **genres.csv**) a la carpeta **data/01_raw**
+- Mover los 3 csv (**countries.csv**, **releases.csv** y **genres.csv**) a la carpeta **data/01_raw**
 
 
 ## 📁 Estructura del Proyecto
