@@ -67,7 +67,7 @@ uv sync --no-install-project
 source .venv/bin/activate
 ```
 
-### 5. Ejecutar jupyer
+### 5. Ejecutar jupyter
 
 ```bash
 jupyter notebook
