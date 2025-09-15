@@ -90,6 +90,31 @@ eda_genre_analysis:
   type: pickle.PickleDataset
   filepath: data/02_intermediate/eda_genre_analysis.pkl
 
+# Análisis categóricos avanzados
+eda_genre_distribution:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_genre_distribution.pkl
+
+eda_genre_diversity:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_genre_diversity.pkl
+
+eda_genre_associations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_genre_associations.pkl
+
+eda_categorical_trends:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_categorical_trends.pkl
+
+eda_advanced_categorical_visualizations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_advanced_categorical_visualizations.pkl
+
+eda_advanced_categorical_metrics:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/eda_advanced_categorical_metrics.pkl
+
 # Resultados de Preparación de Datos (Fase 3)
 cleaning_visualizations:
   type: pickle.PickleDataset
@@ -123,3 +148,8 @@ cleaning_process:
 comparative_analysis_chart:
   type: matplotlib.MatplotlibWriter
   filepath: data/08_reporting/comparative_analysis.png
+
+# Visualizaciones categóricas avanzadas
+advanced_categorical_analysis:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/advanced_categorical_analysis.png
