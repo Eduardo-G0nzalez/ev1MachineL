@@ -5,6 +5,9 @@
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+## 📷 Video explicativo
+https://drive.google.com/file/d/1As-mk4WYkrqv6CfL4AItxU33odSIaEzI/view?usp=sharing
+
 ## 📋 Descripción del Proyecto
 
 Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analizar datos cinematográficos de **Letterboxd** y estudiar la evolución de géneros cinematográficos entre las décadas de 2000s y 2010s en Estados Unidos.
