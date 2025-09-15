@@ -232,26 +232,6 @@ uv run jupyter notebook --notebook-dir=notebooks --port=8888
 3. Agregar tests en `tests/`
 4. Documentar cambios en este README
 
-### Estructura de Commits
-
-```
-feat: nueva funcionalidad
-fix: corrección de bug
-docs: actualización de documentación
-style: cambios de formato
-refactor: refactorización de código
-test: agregar o modificar tests
-```
-
-## 🤝 Contribuciones
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-=======
->>>>>>> 00603b08cac3810816e3b7dbda2edcdfe4214870
 
 ## 📄 Licencia
 
