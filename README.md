@@ -16,8 +16,8 @@ Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analiz
 - **Análisis Comparativo**: Comparar tendencias de géneros entre décadas (2000s vs 2010s)
 - **Visualizaciones Avanzadas**: Crear gráficos informativos y profesionales
 
-### 📊 Datasets
-
+### 📊 Datasets a descargar
+- **Fuente**: https://www.kaggle.com/datasets/gsimonx37/letterboxd
 - **releases**: Eventos de estreno por película y país (1.3M+ registros)
 - **genres**: Asignaciones película-género (1M+ registros)
 - **countries**: Asociaciones película-país (693K+ registros)
@@ -59,6 +59,10 @@ source .venv/bin/activate
 ```bash
 kedro info
 ```
+
+### 5. Verificar instalación kedro
+
+Mover los 3 csv a la carpeta data/01_raw
 
 ## 📁 Estructura del Proyecto
 
