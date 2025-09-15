@@ -16,11 +16,11 @@ Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analiz
 - **Análisis Comparativo**: Comparar tendencias de géneros entre décadas (2000s vs 2010s)
 - **Visualizaciones Avanzadas**: Crear gráficos informativos y profesionales
 
-### 📊 Datasets
-
-- **releases**: Eventos de estreno por película y país (1.3M+ registros)
-- **genres**: Asignaciones película-género (1M+ registros)
-- **countries**: Asociaciones película-país (693K+ registros)
+### 📊 Datasets a descargar
+- **Fuente**: https://www.kaggle.com/datasets/gsimonx37/letterboxd
+- **releases.csv**: Eventos de estreno por película y país (1.3M+ registros)
+- **genres.csv**: Asignaciones película-género (1M+ registros)
+- **countries.csv**: Asociaciones película-país (693K+ registros)
 
 ## 🚀 Instalación y Configuración
 
@@ -59,6 +59,11 @@ source .venv/bin/activate
 ```bash
 kedro info
 ```
+
+### 5. Carga de los dataset
+
+- Mover los 3 csv (**countries.csv**, **releases.csv** y **genres.csv**) a la carpeta **data/01_raw**
+
 
 ## 📁 Estructura del Proyecto
 
@@ -137,24 +142,6 @@ kedro info
 - **Jupyter**: Notebooks interactivos
 - **NumPy**: Cálculos numéricos
 
-<<<<<<< HEAD
-## 🧪 Testing
-
-```bash
-# Ejecutar todos los tests
-uv run pytest
-
-# Ejecutar con cobertura
-uv run pytest --cov=src/letterboxdml
-
-# Ejecutar tests específicos
-uv run pytest tests/test_run.py
-
-# O con entorno virtual activado
-pytest
-pytest --cov=src/letterboxdml
-pytest tests/test_run.py
-```
 
 ## 📄 Licencia
 
@@ -162,7 +149,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👨‍💻 Autor
 
-**Mathias Jara**
+**Mathias Jara** | 
 **Eduardo Gonzalez**
 
 
