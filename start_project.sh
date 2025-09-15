@@ -14,13 +14,24 @@ if [ ! -d ".venv" ]; then
     fi
 fi
 
+# Verificar si uv está instalado
+if ! command -v uv &> /dev/null; then
+    echo "❌ uv no está instalado"
+    echo "🔄 Instalando uv..."
+    pip install uv
+    if [ $? -ne 0 ]; then
+        echo "❌ Error instalando uv"
+        exit 1
+    fi
+fi
+
 # Activar entorno virtual
 echo "🔄 Activando entorno virtual..."
 source .venv/bin/activate
 
 # Verificar Kedro
 echo "🔄 Verificando Kedro..."
-kedro info
+uv run kedro info
 if [ $? -ne 0 ]; then
     echo "❌ Error con Kedro"
     exit 1
@@ -30,10 +41,10 @@ echo ""
 echo "✅ ¡Proyecto listo!"
 echo ""
 echo "📋 Opciones disponibles:"
-echo "1. Ejecutar pipeline completo: kedro run"
-echo "2. Abrir Jupyter Notebooks: kedro jupyter notebook"
-echo "3. Ver información del proyecto: kedro info"
-echo "4. Ejecutar tests: pytest"
+echo "1. Ejecutar pipeline completo: uv run kedro run"
+echo "2. Abrir Jupyter Notebooks: uv run jupyter notebook --notebook-dir=notebooks --port=8888"
+echo "3. Ver información del proyecto: uv run kedro info"
+echo "4. Ejecutar tests: uv run pytest"
 echo ""
 
 # Mantener la sesión activa

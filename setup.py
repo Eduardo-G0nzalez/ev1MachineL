@@ -37,27 +37,21 @@ def create_virtual_environment():
     
     return run_command("python -m venv .venv", "Creando entorno virtual")
 
-def activate_and_install():
-    """Activa el entorno virtual e instala dependencias"""
-    if os.name == 'nt':  # Windows
-        activate_cmd = ".venv\\Scripts\\activate"
-        pip_cmd = ".venv\\Scripts\\pip"
-    else:  # Unix/Linux/MacOS
-        activate_cmd = "source .venv/bin/activate"
-        pip_cmd = ".venv/bin/pip"
+def install_with_uv():
+    """Instala dependencias usando uv (Astra)"""
+    # Verificar si uv está instalado
+    uv_check = subprocess.run("uv --version", shell=True, capture_output=True, text=True)
+    if uv_check.returncode != 0:
+        print("❌ uv no está instalado. Instalando uv...")
+        if not run_command("pip install uv", "Instalando uv"):
+            return False
     
-    # Instalar dependencias
-    install_cmd = f"{pip_cmd} install -r requirements.txt"
-    return run_command(install_cmd, "Instalando dependencias")
+    # Usar uv sync para crear entorno virtual e instalar dependencias
+    return run_command("uv sync", "Creando entorno virtual e instalando dependencias con uv")
 
 def verify_kedro():
     """Verifica que Kedro esté instalado correctamente"""
-    if os.name == 'nt':
-        kedro_cmd = ".venv\\Scripts\\kedro"
-    else:
-        kedro_cmd = ".venv/bin/kedro"
-    
-    return run_command(f"{kedro_cmd} info", "Verificando instalación de Kedro")
+    return run_command("uv run kedro info", "Verificando instalación de Kedro")
 
 def main():
     """Función principal de configuración"""
@@ -68,12 +62,8 @@ def main():
     if not check_python_version():
         sys.exit(1)
     
-    # Crear entorno virtual
-    if not create_virtual_environment():
-        sys.exit(1)
-    
-    # Instalar dependencias
-    if not activate_and_install():
+    # Instalar dependencias con uv
+    if not install_with_uv():
         sys.exit(1)
     
     # Verificar Kedro
@@ -89,9 +79,9 @@ def main():
     else:
         print("   source .venv/bin/activate")
     print("2. Ejecuta el proyecto:")
-    print("   kedro run")
+    print("   uv run kedro run")
     print("3. Abre Jupyter Notebooks:")
-    print("   kedro jupyter notebook")
+    print("   uv run jupyter notebook --notebook-dir=notebooks --port=8888")
     print("\n📚 Lee el README.md para más información")
 
 if __name__ == "__main__":

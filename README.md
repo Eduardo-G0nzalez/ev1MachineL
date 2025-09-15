@@ -28,41 +28,50 @@ Este proyecto de **Machine Learning** utiliza el framework **Kedro** para analiz
 
 - Python 3.8 o superior
 - Git
-- pip o conda
+- [uv](https://docs.astral.sh/uv/) (Astra) - Gestor de paquetes moderno
 
-### 1. Clonar el Repositorio
+### 1. Instalar uv (Astra)
+
+```bash
+# En Windows (PowerShell)
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# En macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# O usando pip
+pip install uv
+```
+
+### 2. Clonar el Repositorio
 
 ```bash
 git clone https://github.com/Eduardo-G0nzalez/ev1MachineL.git
 cd ev1MachineL
 ```
 
-### 2. Crear Entorno Virtual
+### 3. Crear Entorno Virtual e Instalar Dependencias
 
 ```bash
-# Opción 1: Usando venv
-python -m venv .venv
-source .venv/bin/activate  # En Windows: .venv\Scripts\activate
-
-# Opción 2: Usando conda
-conda create -n letterboxdml python=3.9
-conda activate letterboxdml
+# Crear entorno virtual e instalar todas las dependencias automáticamente
+uv sync
 ```
 
-### 3. Instalar Dependencias
+### 4. Activar Entorno Virtual
 
 ```bash
-pip install -r requirements.txt
+# En Windows
+.venv\Scripts\activate
+
+# En macOS/Linux
+source .venv/bin/activate
 ```
 
-### 4. Configurar Kedro
+### 5. Verificar Instalación
 
 ```bash
 # Verificar que Kedro esté instalado correctamente
-kedro info
-
-# Configurar el proyecto (si es necesario)
-kedro install
+uv run kedro info
 ```
 
 ## 📁 Estructura del Proyecto
@@ -93,28 +102,43 @@ ev1MachineL/
 ### Ejecutar el Pipeline Completo
 
 ```bash
+# Usando uv (recomendado)
+uv run kedro run
+
+# O con entorno virtual activado
 kedro run
 ```
 
 ### Trabajar con Jupyter Notebooks
 
 ```bash
-# Iniciar Jupyter Notebook
-kedro jupyter notebook
+# Iniciar Jupyter Notebook (método principal)
+uv run jupyter notebook --notebook-dir=notebooks --port=8888
 
-# O iniciar JupyterLab
-kedro jupyter lab
+# O usando Kedro
+uv run kedro jupyter notebook
+
+# Iniciar JupyterLab
+uv run kedro jupyter lab
 ```
 
 ### Ejecutar Tests
 
 ```bash
+# Usando uv
+uv run pytest
+
+# O con entorno virtual activado
 pytest
 ```
 
 ### Ver Información del Proyecto
 
 ```bash
+# Usando uv
+uv run kedro info
+
+# O con entorno virtual activado
 kedro info
 ```
 
@@ -159,14 +183,44 @@ kedro info
 
 ```bash
 # Ejecutar todos los tests
-pytest
+uv run pytest
 
 # Ejecutar con cobertura
-pytest --cov=src/letterboxdml
+uv run pytest --cov=src/letterboxdml
 
 # Ejecutar tests específicos
+uv run pytest tests/test_run.py
+
+# O con entorno virtual activado
+pytest
+pytest --cov=src/letterboxdml
 pytest tests/test_run.py
 ```
+
+## ⚡ Inicio Rápido
+
+### Para usuarios que quieren empezar inmediatamente:
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Eduardo-G0nzalez/ev1MachineL.git
+cd ev1MachineL
+
+# 2. Instalar uv (si no lo tienes)
+pip install uv
+
+# 3. Crear entorno virtual e instalar dependencias
+uv sync
+
+# 4. Activar entorno virtual
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+
+# 5. Iniciar Jupyter Notebooks
+uv run jupyter notebook --notebook-dir=notebooks --port=8888
+```
+
+**Acceso:** `http://localhost:8888`
 
 ## 📝 Desarrollo
 
