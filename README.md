@@ -62,7 +62,8 @@ kedro info
 
 ### 5. Verificar instalación kedro
 
-Mover los 3 csv a la carpeta data/01_raw
+Mover los 3 csv (**countries.csv**, **releases.csv** y **genres.csv**) a la carpeta **data/01_raw**
+
 
 ## 📁 Estructura del Proyecto
 
@@ -141,7 +142,7 @@ kedro info
 - **Jupyter**: Notebooks interactivos
 - **NumPy**: Cálculos numéricos
 
-<<<<<<< HEAD
+
 ## 🧪 Testing
 
 ```bash
@@ -166,7 +167,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👨‍💻 Autor
 
-**Mathias Jara**//
+**Mathias Jara** | 
 **Eduardo Gonzalez**
 
 
