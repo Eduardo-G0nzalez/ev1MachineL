@@ -160,17 +160,11 @@ kedro info
 
 ## 📈 Características Destacadas
 
-### ✨ Visualizaciones Profesionales
+### ✨ Visualizaciones
 - **6 gráficos de calidad de datos** con análisis de completitud
 - **6 gráficos temporales** con tendencias y estacionalidad
 - **6 gráficos de proceso de limpieza** mostrando antes/después
 - **6 gráficos comparativos** entre décadas
-
-### 🎨 Diseño Visual
-- Colores consistentes y profesionales
-- Comentarios explicativos detallados
-- Gráficos interactivos y informativos
-- Estadísticas resumidas automáticas
 
 ### 🔧 Herramientas Utilizadas
 - **Kedro**: Framework de data engineering
