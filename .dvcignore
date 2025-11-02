@@ -27,8 +27,7 @@ env/
 .DS_Store
 Thumbs.db
 
-# Kedro
-data/**/*.pkl
+# Kedro - Solo ignorar PNGs de reportes (son grandes y no necesarios para reproducibilidad)
 data/08_reporting/*.png
 data/**/__pycache__
 

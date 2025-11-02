@@ -21,9 +21,6 @@ stages:
       - data/03_primary/final_df.csv
       - data/03_primary/integrated_data.csv
       - data/03_primary/final_df_us_2000s_2010s.parquet
-    plots:
-      - data/08_reporting/cleaning_process.png
-      - data/08_reporting/comparative_analysis.png
 
   # ============================================
   # FASE 2: Feature Engineering
@@ -39,11 +36,6 @@ stages:
     outs:
       - data/05_model_input/classification_dataset.csv
       - data/05_model_input/regression_dataset.csv
-    plots:
-      - data/08_reporting/quality_analysis.png
-      - data/08_reporting/temporal_analysis.png
-      - data/08_reporting/genre_analysis.png
-      - data/08_reporting/advanced_categorical_analysis.png
 
   # ============================================
   # FASE 3: Entrenar Modelos de Clasificación
@@ -59,8 +51,6 @@ stages:
     metrics:
       - data/06_models/classification_metrics.json:
           cache: false
-    plots:
-      - data/08_reporting/classification_results.png
 
   # ============================================
   # FASE 4: Entrenar Modelos de Regresión
@@ -76,8 +66,6 @@ stages:
     metrics:
       - data/06_models/regression_metrics.json:
           cache: false
-    plots:
-      - data/08_reporting/regression_results.png
 
   # ============================================
   # FASE 5: Evaluar Modelos
@@ -94,7 +82,4 @@ stages:
     metrics:
       - data/07_model_output/final_metrics.json:
           cache: false
-    plots:
-      - data/08_reporting/model_comparison.png
-      - data/08_reporting/best_models_analysis.png
 
