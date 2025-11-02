@@ -153,3 +153,59 @@ comparative_analysis_chart:
 advanced_categorical_analysis:
   type: matplotlib.MatplotlibWriter
   filepath: data/08_reporting/advanced_categorical_analysis.png
+
+# Datasets de Machine Learning (Fase 4)
+regression_dataset:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/regression_dataset.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+classification_dataset:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/classification_dataset.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# Resultados de ML (Fase 4)
+feature_correlations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/feature_correlations.pkl
+
+regression_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/regression_results.pkl
+
+classification_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/classification_results.pkl
+
+model_evaluation:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/model_evaluation.pkl
+
+ml_visualizations:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/ml_visualizations.pkl
+
+confusion_matrix_analysis:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/confusion_matrix_analysis.pkl
+
+# Métricas de ML (Fase 4)
+classification_metrics:
+  type: pickle.PickleDataset
+  filepath: data/06_models/classification_metrics.pkl
+
+regression_metrics:
+  type: pickle.PickleDataset
+  filepath: data/06_models/regression_metrics.pkl
+
+# Visualizaciones de ML
+ml_model_evaluation:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/ml_model_evaluation.png
+
+confusion_matrix:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/confusion_matrix.png

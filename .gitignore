@@ -211,6 +211,18 @@ __pycache__/
 *.log
 logs/
 
+# Airflow logs and metadata
+airflow.db
+airflow-webserver.pid
+airflow.cfg
+.dockerignore
+
 # Temporary files
 *.tmp
 *.temp
+
+# Docker volumes and data
+postgres-db-volume/
+
+# DVC cache (if not using remote storage)
+.dvc/cache/

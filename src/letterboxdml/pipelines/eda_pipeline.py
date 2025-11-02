@@ -12,7 +12,7 @@ completo de los datos cinematográficos, incluyendo:
 6. Análisis de asociaciones entre géneros
 7. Tendencias temporales y estacionalidad
 
-Autor: Mathias Jara
+Autor: Mathias Jara y Eduardo Gonzalez
 Fecha: 2025
 """
 

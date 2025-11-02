@@ -11,7 +11,7 @@ y limpieza de datos cinematográficos, incluyendo:
 5. Visualizaciones del proceso de limpieza
 6. Análisis comparativo entre décadas
 
-Autor: Mathias Jara
+Autor: Mathias Jara y Eduardo Gonzalez
 Fecha: 2025
 """
 
@@ -118,20 +118,30 @@ def create_features(releases_clean):
         pd.DataFrame: Dataset con características temporales creadas
     """
     # === CALCULAR PRIMERA FECHA DE ESTRENO POR PELÍCULA ===
-    # Fecha mínima por id (primera fecha de estreno)
-    min_release = (releases_clean.groupby("id", as_index=False)["_date_parsed"].min()
-                   .rename(columns={"_date_parsed": "first_date"}))
+    # Optimizado para usar menos memoria: seleccionar solo columnas necesarias primero
+    releases_subset = releases_clean[["id", "_date_parsed"]].copy()
+    
+    # Usar agg con 'min' directamente para mejor rendimiento
+    min_release = releases_subset.groupby("id", as_index=False).agg({
+        "_date_parsed": "min"
+    }).rename(columns={"_date_parsed": "first_date"})
+    
+    # Liberar memoria
+    del releases_subset
     
     # === EXTRAER AÑO DE LA PRIMERA FECHA DE ESTRENO ===
     # Asegurar que first_date sea datetime
-    min_release["first_date"] = pd.to_datetime(min_release["first_date"])
+    min_release["first_date"] = pd.to_datetime(min_release["first_date"], errors='coerce')
     min_release["first_year"] = min_release["first_date"].dt.year
     
     # === CLASIFICAR CADA PELÍCULA EN SU DÉCADA CORRESPONDIENTE ===
-    min_release["decade"] = np.where(min_release["first_year"].between(2000, 2009), "2000s",
-                             np.where(min_release["first_year"].between(2010, 2019), "2010s", "other"))
+    # Usar vectorización más eficiente
+    min_release["decade"] = min_release["first_year"].apply(
+        lambda x: "2000s" if 2000 <= x <= 2009 else ("2010s" if 2010 <= x <= 2019 else "other")
+    )
     
     print("Features creadas: first_date, first_year, decade (2000s/2010s/other)")
+    print(f"Shape: {min_release.shape}")
     
     return min_release
 

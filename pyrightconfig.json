@@ -1,0 +1,31 @@
+{
+    "include": [
+        "src",
+        "notebooks",
+        "*.py"
+    ],
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        ".venv",
+        "data"
+    ],
+    "pythonVersion": "3.12",
+    "pythonPlatform": "Windows",
+    "executionEnvironments": [
+        {
+            "root": ".",
+            "pythonVersion": "3.12",
+            "pythonPlatform": "Windows",
+            "extraPaths": [
+                "./.venv/Lib/site-packages",
+                "./src"
+            ]
+        }
+    ],
+    "typeCheckingMode": "basic",
+    "useLibraryCodeForTypes": true,
+    "autoImportCompletions": true,
+    "diagnosticMode": "workspace",
+    "stubPath": "./.venv/Lib/site-packages"
+}
