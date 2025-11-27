@@ -36,7 +36,7 @@ dag = DAG(
     description='DAG para ejecutar pipelines de ML con Kedro',
     schedule_interval=None,  # Trigger manual
     catchup=False,
-    tags=['kedro', 'machine-learning', 'classification', 'regression'],
+    tags=['kedro', 'machine-learning', 'unsupervised', 'classification', 'regression'],
 )
 
 # ============================================
