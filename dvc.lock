@@ -1,0 +1,54 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: kedro run --pipeline=data_preparation_pipeline
+    deps:
+    - path: data/01_raw/countries.csv
+      hash: md5
+      md5: acf7e7629d4f9b502759d1149f6203f3
+      size: 10937993
+    - path: data/01_raw/genres.csv
+      hash: md5
+      md5: d9b0e95e708b1c12355ab72f0e168be0
+      size: 17927507
+    - path: data/01_raw/movies.csv
+      hash: md5
+      md5: 25887ff1a50ddfe8158c7392eb6bd13a
+      size: 254431016
+    - path: data/01_raw/releases.csv
+      hash: md5
+      md5: 1b167612c580172ccd0f38ab5f88ed7a
+      size: 51230399
+    - path: src/letterboxdml/pipelines/data_preparation_pipeline.py
+      hash: md5
+      md5: bee59bde943e1497af527d0058531cbc
+      size: 26707
+    outs:
+    - path: data/02_intermediate/countries_clean.csv
+      hash: md5
+      md5: 83f466583c17547ea00a5f8a7732395a
+      size: 16328166
+    - path: data/02_intermediate/genres_clean.csv
+      hash: md5
+      md5: b658e5863574e2a94774391bff701afd
+      size: 18974357
+    - path: data/02_intermediate/min_release.csv
+      hash: md5
+      md5: e49301f94ea90a61171394816a63631b
+      size: 26367010
+    - path: data/02_intermediate/releases_clean.csv
+      hash: md5
+      md5: 21ff7bf4eb47968888462c3850f7bf20
+      size: 38461367
+    - path: data/03_primary/final_df.csv
+      hash: md5
+      md5: 3f77ea3933892feab5c27e48675112dd
+      size: 2485006
+    - path: data/03_primary/final_df_us_2000s_2010s.parquet
+      hash: md5
+      md5: 443d60ecab8461208643197dbd1fa59c
+      size: 461276
+    - path: data/03_primary/integrated_data.csv
+      hash: md5
+      md5: c8dc899e853432fe16df5777437dd1db
+      size: 2485006

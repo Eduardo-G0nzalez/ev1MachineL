@@ -7,6 +7,7 @@ Este DAG ejecuta:
 3. Pipeline de Clasificación
 4. Pipeline de Regresión
 5. Pipeline de Evaluación Final
+6. Pipeline de Aprendizaje No Supervisado (Clustering + Reducción Dimensional)
 
 Autores: Mathias Jara & Eduardo Gonzalez
 """
@@ -86,7 +87,16 @@ evaluate_models = BashOperator(
 )
 
 # ============================================
-# TASK 6: Generar Reporte
+# TASK 6: Aprendizaje No Supervisado
+# ============================================
+unsupervised_learning = BashOperator(
+    task_id='unsupervised_learning',
+    bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=unsupervised_learning_pipeline',
+    dag=dag,
+)
+
+# ============================================
+# TASK 7: Generar Reporte
 # ============================================
 generate_report = BashOperator(
     task_id='generate_final_report',
@@ -102,10 +112,11 @@ generate_report = BashOperator(
 # 2. EDA (depende de prepare_data)
 # 3. Train models (depende de EDA) - paralelo
 # 4. Evaluate (depende de ambos trains)
-# 5. Report (depende de evaluate)
+# 5. Unsupervised Learning (depende de EDA - usa regression_dataset)
+# 6. Report (depende de evaluate y unsupervised)
 
 prepare_data >> run_eda
-run_eda >> [train_classification, train_regression]
+run_eda >> [train_classification, train_regression, unsupervised_learning]
 [train_classification, train_regression] >> evaluate_models
-evaluate_models >> generate_report
+[evaluate_models, unsupervised_learning] >> generate_report
 

@@ -68,7 +68,7 @@ stages:
           cache: false
 
   # ============================================
-  # FASE 5: Evaluar Modelos
+  # FASE 5: Evaluar Modelos Supervisados
   # ============================================
   evaluate:
     cmd: kedro run --pipeline=ml_modeling_pipeline
@@ -81,5 +81,33 @@ stages:
       - data/07_model_output/final_metrics.pkl
     metrics:
       - data/07_model_output/final_metrics.json:
+          cache: false
+
+  # ============================================
+  # FASE 6: Aprendizaje No Supervisado
+  # ============================================
+  unsupervised_learning:
+    cmd: kedro run --pipeline=unsupervised_learning_pipeline
+    deps:
+      - data/05_model_input/regression_dataset.csv
+      - src/letterboxdml/pipelines/unsupervised_learning/
+    outs:
+      - data/06_models/X_scaled.pkl
+      - data/06_models/scaler_clustering.pkl
+      - data/06_models/feature_cols_clustering.pkl
+      - data/06_models/movie_indices.pkl
+      - data/06_models/optimal_k_results.pkl
+      - data/06_models/kmeans_results.pkl
+      - data/06_models/dbscan_results.pkl
+      - data/06_models/hierarchical_results.pkl
+      - data/06_models/pca_results.pkl
+      - data/06_models/tsne_results.pkl
+      - data/06_models/umap_results.pkl
+      - data/06_models/pca_biplot_data.pkl
+      - data/07_model_output/clustering_comparison.csv
+      - data/07_model_output/pca_loadings.csv
+      - data/07_model_output/dim_reduction_comparison.csv
+    metrics:
+      - data/07_model_output/clustering_metrics.json:
           cache: false
 

@@ -18,7 +18,9 @@ Este proyecto de **Machine Learning** implementa metodología **CRISP-DM** compl
 
 - ✅ **Análisis Exploratorio de Datos (EDA)**: Comprensión profunda de estructura y calidad
 - ✅ **Preparación de Datos**: Limpieza, transformación e integración de datasets
-- ✅ **Modelado de Machine Learning**: Clasificación y regresión con ≥5 modelos cada uno
+- ✅ **Modelado de Machine Learning Supervisado**: Clasificación y regresión con ≥5 modelos cada uno
+- ✅ **Modelado de Machine Learning No Supervisado**: Clustering (K-Means, DBSCAN, Hierarchical) y Reducción Dimensional (PCA, t-SNE, UMAP)
+- ✅ **Integración**: Clustering como feature engineering para modelos supervisados
 - ✅ **Evaluación y Selección**: Comparación de modelos y selección de mejores
 - ✅ **Despliegue**: Plan de producción con monitoreo
 
@@ -116,6 +118,20 @@ jupyter notebook
 - Selección de mejores modelos
 - Validación contra objetivos de negocio
 
+### 🎯 Fase 5: Aprendizaje No Supervisado (NUEVO)
+- **Pipeline**: `unsupervised_learning_pipeline`
+- **Clustering**:
+  - K-Means con selección óptima de k (Elbow + Silhouette)
+  - DBSCAN con búsqueda automática de eps
+  - Clustering Jerárquico (Agglomerative)
+  - Métricas: Silhouette Score, Davies-Bouldin, Calinski-Harabasz
+- **Reducción de Dimensionalidad**:
+  - PCA completo (varianza explicada, loadings, biplot)
+  - t-SNE para visualización 2D/3D
+  - UMAP para reducción dimensional moderna
+- **Integración**: Clusters como features para modelos supervisados
+- **Notebook**: `ev3.ipynb` (análisis completo)
+
 ### 🚀 Fase 6: Despliegue
 - **Notebook**: `Fase6_Despliegue.ipynb`
 - Plan de infraestructura
@@ -145,6 +161,9 @@ jupyter notebook
 ┌─────────────────┐
 │ Pipeline Kedro  │ ← Docker Container
 │ (Preparación)   │
+│ + EDA           │
+│ + Supervisado   │
+│ + No Supervisado│ ← NUEVO
 └──────┬──────────┘
        │
        v

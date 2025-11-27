@@ -10,6 +10,7 @@ from .pipelines.ml_modeling_pipeline import (
     create_classification_pipeline,
     create_regression_pipeline
 )
+from .pipelines.unsupervised_learning.pipeline import create_unsupervised_learning_pipeline
 
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -27,8 +28,11 @@ def register_pipelines() -> dict[str, Pipeline]:
     regression_pipeline = create_regression_pipeline()
     ml_modeling_pipeline = create_ml_modeling_pipeline()
     
+    # Pipeline de Unsupervised Learning
+    unsupervised_pipeline = create_unsupervised_learning_pipeline()
+    
     # Pipeline por defecto que incluye todos los pipelines
-    default_pipeline = eda_pipeline + data_prep_pipeline + ml_modeling_pipeline
+    default_pipeline = eda_pipeline + data_prep_pipeline + ml_modeling_pipeline + unsupervised_pipeline
     
     return {
         "eda_pipeline": eda_pipeline,
@@ -36,5 +40,6 @@ def register_pipelines() -> dict[str, Pipeline]:
         "classification_pipeline": classification_pipeline,
         "regression_pipeline": regression_pipeline,
         "ml_modeling_pipeline": ml_modeling_pipeline,
+        "unsupervised_learning_pipeline": unsupervised_pipeline,
         "__default__": default_pipeline
     }

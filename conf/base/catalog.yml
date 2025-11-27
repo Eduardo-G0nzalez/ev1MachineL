@@ -209,3 +209,94 @@ ml_model_evaluation:
 confusion_matrix:
   type: matplotlib.MatplotlibWriter
   filepath: data/08_reporting/confusion_matrix.png
+
+# =============================================================================
+# UNSUPERVISED LEARNING - Clustering (Fase 5)
+# =============================================================================
+X_scaled:
+  type: pickle.PickleDataset
+  filepath: data/06_models/X_scaled.pkl
+
+scaler_clustering:
+  type: pickle.PickleDataset
+  filepath: data/06_models/scaler_clustering.pkl
+
+feature_cols_clustering:
+  type: pickle.PickleDataset
+  filepath: data/06_models/feature_cols_clustering.pkl
+
+movie_indices:
+  type: pickle.PickleDataset
+  filepath: data/06_models/movie_indices.pkl
+
+optimal_k_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/optimal_k_results.pkl
+
+kmeans_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/kmeans_results.pkl
+
+dbscan_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/dbscan_results.pkl
+
+hierarchical_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/hierarchical_results.pkl
+
+clustering_comparison:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/clustering_comparison.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# =============================================================================
+# UNSUPERVISED LEARNING - Reducción de Dimensionalidad (Fase 5)
+# =============================================================================
+pca_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/pca_results.pkl
+
+tsne_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/tsne_results.pkl
+
+umap_results:
+  type: pickle.PickleDataset
+  filepath: data/06_models/umap_results.pkl
+
+pca_loadings:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/pca_loadings.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+pca_biplot_data:
+  type: pickle.PickleDataset
+  filepath: data/06_models/pca_biplot_data.pkl
+
+dim_reduction_comparison:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/dim_reduction_comparison.csv
+  load_args: {sep: ",", encoding: "latin-1"}
+  save_args: {index: False, encoding: "latin-1"}
+
+# =============================================================================
+# UNSUPERVISED LEARNING - Visualizaciones (Fase 5)
+# =============================================================================
+clustering_visualizations:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/clustering_visualizations.png
+
+pca_visualizations:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/pca_visualizations.png
+
+tsne_visualizations:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/tsne_visualizations.png
+
+umap_visualizations:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/umap_visualizations.png
