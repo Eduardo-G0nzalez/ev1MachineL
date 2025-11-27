@@ -13,15 +13,25 @@ services:
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
+      - ./src:/app/src:ro  # Montar código fuente como solo lectura
+      - ./conf:/app/conf:ro  # Montar configuración
+      - ./dags:/app/dags:ro  # Montar DAGs para referencia
     environment:
       - KEDRO_ENV=base
       - AIRFLOW_HOME=/opt/airflow
+      - PYTHONUNBUFFERED=1
     networks:
       - ml-network
-    command: kedro run
+    # Mantener contenedor corriendo para que Airflow pueda ejecutar comandos
+    command: tail -f /dev/null
     restart: unless-stopped
     mem_limit: 8g
     mem_reservation: 4g
+    healthcheck:
+      test: ["CMD", "python", "-c", "import kedro; print('Kedro OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # ============================================
   # Servicio: Airflow Web Server

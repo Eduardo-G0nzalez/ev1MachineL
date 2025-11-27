@@ -30,23 +30,32 @@ FROM python:3.10-slim
 LABEL maintainer="Mathias Jara & Eduardo Gonzalez"
 LABEL description="Machine Learning Pipeline with Kedro, DVC, Airflow"
 
+# Instalar dependencias de sistema necesarias para runtime
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Crear usuario no-root
 RUN useradd -m -u 1000 kedro && \
     mkdir -p /app && \
     chown kedro:kedro /app
 
-# Establecer usuario
-USER kedro
-
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos del proyecto
-COPY --chown=kedro:kedro . .
-
-# Copiar Python packages desde builder
+# Copiar Python packages desde builder (como root primero)
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Cambiar permisos de los packages para el usuario kedro
+RUN chown -R kedro:kedro /usr/local/lib/python3.10/site-packages && \
+    chown -R kedro:kedro /usr/local/bin
+
+# Establecer usuario
+USER kedro
+
+# Copiar archivos del proyecto
+COPY --chown=kedro:kedro . .
 
 # Variables de entorno
 ENV PYTHONUNBUFFERED=1 \
