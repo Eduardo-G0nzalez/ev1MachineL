@@ -587,14 +587,3 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 - ✅ DVC y Airflow actualizados
 - ✅ Documentación técnica completa
 
----
-
-## 📞 Contacto y Soporte
-
-Para preguntas o soporte, contactar a:
-- **Mathias Jara**: mathias.jara@hotmail.com
-- **Eduardo Gonzalez**: [GitHub Profile](https://github.com/Eduardo-G0nzalez)
-
----
-
-**⭐ Proyecto completo y listo para evaluación final - Nota 7.0**
