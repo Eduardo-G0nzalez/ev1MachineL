@@ -35,6 +35,9 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 
+# Importar funciones de preparación de datos para ML
+from .ml_modeling_pipeline import prepare_classification_data, prepare_regression_data
+
 
 # =============================================================================
 # FUNCIONES DE ANÁLISIS BÁSICO
@@ -1572,5 +1575,19 @@ def create_eda_pipeline() -> Pipeline:
             inputs=["final_df"],
             outputs="eda_advanced_categorical_metrics",
             name="calculate_advanced_categorical_metrics"
+        ),
+        
+        # === PREPARACIÓN DE DATASETS PARA ML ===
+        node(
+            func=prepare_classification_data,
+            inputs=["releases", "countries", "genres", "movies"],
+            outputs="classification_dataset",
+            name="prepare_classification_data"
+        ),
+        node(
+            func=prepare_regression_data,
+            inputs=["movies", "genres"],
+            outputs="regression_dataset",
+            name="prepare_regression_data"
         )
     ])

@@ -15,6 +15,7 @@ from sklearn.metrics import (
     silhouette_samples
 )
 from scipy.cluster.hierarchy import linkage, dendrogram
+import json
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -272,4 +273,30 @@ def evaluate_clustering_models(
     }
     
     return pd.DataFrame(comparison)
+
+
+def save_clustering_metrics(
+    clustering_comparison: pd.DataFrame
+) -> dict:
+    """
+    Guardar métricas de clustering en formato JSON.
+    
+    Args:
+        clustering_comparison: DataFrame con comparación de modelos
+        
+    Returns:
+        Dict con métricas para DVC
+    """
+    metrics_dict = {}
+    
+    for _, row in clustering_comparison.iterrows():
+        model_name = row['Modelo']
+        metrics_dict[model_name] = {
+            'n_clusters': int(row['N_Clusters']),
+            'silhouette_score': float(row['Silhouette_Score']) if not pd.isna(row['Silhouette_Score']) else None,
+            'davies_bouldin_index': float(row['Davies_Bouldin']) if not pd.isna(row['Davies_Bouldin']) else None,
+            'calinski_harabasz_score': float(row['Calinski_Harabasz']) if not pd.isna(row['Calinski_Harabasz']) else None
+        }
+    
+    return metrics_dict
 

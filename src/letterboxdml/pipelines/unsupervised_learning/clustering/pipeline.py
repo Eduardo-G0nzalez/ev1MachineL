@@ -11,7 +11,8 @@ from .nodes import (
     train_kmeans,
     train_dbscan,
     train_hierarchical,
-    evaluate_clustering_models
+    evaluate_clustering_models,
+    save_clustering_metrics
 )
 
 
@@ -54,6 +55,12 @@ def create_clustering_pipeline() -> Pipeline:
             inputs=["kmeans_results", "dbscan_results", "hierarchical_results"],
             outputs="clustering_comparison",
             name="evaluate_clustering_models"
+        ),
+        node(
+            func=save_clustering_metrics,
+            inputs="clustering_comparison",
+            outputs="clustering_metrics",
+            name="save_clustering_metrics"
         )
     ])
 

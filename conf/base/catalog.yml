@@ -251,6 +251,10 @@ clustering_comparison:
   load_args: {sep: ",", encoding: "latin-1"}
   save_args: {index: False, encoding: "latin-1"}
 
+clustering_metrics:
+  type: json.JSONDataset
+  filepath: data/07_model_output/clustering_metrics.json
+
 # =============================================================================
 # UNSUPERVISED LEARNING - Reducción de Dimensionalidad (Fase 5)
 # =============================================================================

@@ -107,6 +107,7 @@ stages:
       - data/07_model_output/clustering_comparison.csv
       - data/07_model_output/pca_loadings.csv
       - data/07_model_output/dim_reduction_comparison.csv
+      - data/07_model_output/clustering_metrics.json
     metrics:
       - data/07_model_output/clustering_metrics.json:
           cache: false

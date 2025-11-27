@@ -52,3 +52,112 @@ stages:
       hash: md5
       md5: c8dc899e853432fe16df5777437dd1db
       size: 2485006
+  features:
+    cmd: kedro run --pipeline=eda_pipeline
+    deps:
+    - path: data/02_intermediate/countries_clean.csv
+      hash: md5
+      md5: 83f466583c17547ea00a5f8a7732395a
+      size: 16328166
+    - path: data/02_intermediate/genres_clean.csv
+      hash: md5
+      md5: b658e5863574e2a94774391bff701afd
+      size: 18974357
+    - path: data/02_intermediate/releases_clean.csv
+      hash: md5
+      md5: 21ff7bf4eb47968888462c3850f7bf20
+      size: 38461367
+    - path: data/03_primary/final_df.csv
+      hash: md5
+      md5: 3f77ea3933892feab5c27e48675112dd
+      size: 2485006
+    - path: src/letterboxdml/pipelines/eda_pipeline.py
+      hash: md5
+      md5: 8f200b033d54ba39ff7e75b02eeefd33
+      size: 64726
+    outs:
+    - path: data/05_model_input/classification_dataset.csv
+      hash: md5
+      md5: 3d3207ffcdd5375fc4c62a2a16c8ecba
+      size: 8730678
+    - path: data/05_model_input/regression_dataset.csv
+      hash: md5
+      md5: 2a8004b4a08b4f14521a1f37d8695bd5
+      size: 2402436
+  unsupervised_learning:
+    cmd: kedro run --pipeline=unsupervised_learning_pipeline
+    deps:
+    - path: data/05_model_input/regression_dataset.csv
+      hash: md5
+      md5: 2a8004b4a08b4f14521a1f37d8695bd5
+      size: 2402436
+    - path: src/letterboxdml/pipelines/unsupervised_learning/
+      hash: md5
+      md5: ce8d28469e5644c790673e9bd4779ed0.dir
+      size: 28725
+      nfiles: 10
+    outs:
+    - path: data/06_models/X_scaled.pkl
+      hash: md5
+      md5: 756028ca927489b77e80adf5abdd3832
+      size: 7382835
+    - path: data/06_models/dbscan_results.pkl
+      hash: md5
+      md5: 9368519ea5e33de692e013b64fe679ee
+      size: 7127164
+    - path: data/06_models/feature_cols_clustering.pkl
+      hash: md5
+      md5: 9d244429fa2b3c1dadb0e3dcdf7257d6
+      size: 349
+    - path: data/06_models/hierarchical_results.pkl
+      hash: md5
+      md5: cee477c9c2d92a8cbe462d2910c3bee9
+      size: 1007404
+    - path: data/06_models/kmeans_results.pkl
+      hash: md5
+      md5: 5b12faa667f40d7a8e27c2fa9800e155
+      size: 170161
+    - path: data/06_models/movie_indices.pkl
+      hash: md5
+      md5: 2cc5d12040b25c09d37cd42d874852f2
+      size: 335737
+    - path: data/06_models/optimal_k_results.pkl
+      hash: md5
+      md5: 2e72c458d94b1bc2b9ae50b35ad9fb1f
+      size: 312
+    - path: data/06_models/pca_biplot_data.pkl
+      hash: md5
+      md5: 5987f342b717b44b3d016e1be8d05ec6
+      size: 791
+    - path: data/06_models/pca_results.pkl
+      hash: md5
+      md5: ebbc0b38511c3d2f4697183a926b9bcb
+      size: 7388560
+    - path: data/06_models/scaler_clustering.pkl
+      hash: md5
+      md5: dc4c5b3c953c5b1de0a8c40680267fb2
+      size: 1398
+    - path: data/06_models/tsne_results.pkl
+      hash: md5
+      md5: 30134c3221d4fa14d079374760b6fbd4
+      size: 120832
+    - path: data/06_models/umap_results.pkl
+      hash: md5
+      md5: 30754755d29dca793ecbcd49fa2e1ba8
+      size: 33382346
+    - path: data/07_model_output/clustering_comparison.csv
+      hash: md5
+      md5: 1d15ac0337ce61adcd181ec6b0f68ac1
+      size: 279
+    - path: data/07_model_output/clustering_metrics.json
+      hash: md5
+      md5: b938432ec9b5b585a83613c4cf77cc22
+      size: 575
+    - path: data/07_model_output/dim_reduction_comparison.csv
+      hash: md5
+      md5: f8c1f98ae7a4a40c2794fee96f18b7b4
+      size: 224
+    - path: data/07_model_output/pca_loadings.csv
+      hash: md5
+      md5: 5da4975c04518f0149d12ca1f352ac07
+      size: 13206
