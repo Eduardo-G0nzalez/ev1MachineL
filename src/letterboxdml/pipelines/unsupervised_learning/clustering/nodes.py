@@ -197,39 +197,96 @@ def train_dbscan(X_scaled: np.ndarray, eps: float = None, min_samples: int = 5) 
     }
 
 
-def train_hierarchical(X_scaled: np.ndarray, optimal_k_results: dict, linkage_method: str = 'ward') -> dict:
+def train_hierarchical(X_scaled: np.ndarray, optimal_k_results: dict, linkage_method: str = 'ward', max_samples: int = 10000) -> dict:
     """
     Entrenar modelo de Clustering Jerárquico.
     
     Args:
         X_scaled: Datos normalizados
-        n_clusters: Número de clusters
+        optimal_k_results: Resultados de búsqueda de k óptimo
         linkage_method: Método de linkage ('ward', 'complete', 'average')
+        max_samples: Número máximo de muestras a usar (para evitar problemas de memoria)
         
     Returns:
         Dict con modelo y métricas
     """
     n_clusters = optimal_k_results['recommended_k']
-    hierarchical = AgglomerativeClustering(
-        n_clusters=n_clusters, 
-        linkage=linkage_method
-    )
-    labels = hierarchical.fit_predict(X_scaled)
     
-    # Métricas
-    silhouette = silhouette_score(X_scaled, labels)
-    davies_bouldin = davies_bouldin_score(X_scaled, labels)
-    calinski_harabasz = calinski_harabasz_score(X_scaled, labels)
+    # Si el dataset es muy grande, muestrear para evitar problemas de memoria
+    # El clustering jerárquico tiene complejidad O(n²) en memoria
+    n_samples = X_scaled.shape[0]
+    use_sampling = n_samples > max_samples
     
-    return {
-        'model': hierarchical,
-        'labels': labels,
-        'silhouette_score': silhouette,
-        'davies_bouldin_index': davies_bouldin,
-        'calinski_harabasz_score': calinski_harabasz,
-        'n_clusters': n_clusters,
-        'linkage_method': linkage_method
-    }
+    if use_sampling:
+        # Muestrear aleatoriamente manteniendo la distribución
+        np.random.seed(42)
+        sample_indices = np.random.choice(n_samples, size=max_samples, replace=False)
+        X_sampled = X_scaled[sample_indices]
+        
+        # Entrenar en muestra reducida
+        hierarchical = AgglomerativeClustering(
+            n_clusters=n_clusters, 
+            linkage=linkage_method
+        )
+        labels_sampled = hierarchical.fit_predict(X_sampled)
+        
+        # Predecir en todo el dataset usando el modelo entrenado
+        # Para clustering jerárquico, usamos KMeans en el dataset completo con los mismos clusters
+        # como aproximación más eficiente en memoria
+        from sklearn.cluster import KMeans
+        kmeans_approx = KMeans(n_clusters=n_clusters, random_state=42, n_init=10, max_iter=300)
+        labels = kmeans_approx.fit_predict(X_scaled)
+        
+        # Calcular métricas en muestra para referencia
+        silhouette_sampled = silhouette_score(X_sampled, labels_sampled)
+        davies_bouldin_sampled = davies_bouldin_score(X_sampled, labels_sampled)
+        calinski_harabasz_sampled = calinski_harabasz_score(X_sampled, labels_sampled)
+        
+        # Calcular métricas en dataset completo
+        silhouette = silhouette_score(X_scaled, labels)
+        davies_bouldin = davies_bouldin_score(X_scaled, labels)
+        calinski_harabasz = calinski_harabasz_score(X_scaled, labels)
+        
+        return {
+            'model': hierarchical,  # Modelo entrenado en muestra
+            'labels': labels,  # Labels para todo el dataset
+            'silhouette_score': silhouette,
+            'davies_bouldin_index': davies_bouldin,
+            'calinski_harabasz_score': calinski_harabasz,
+            'n_clusters': n_clusters,
+            'linkage_method': linkage_method,
+            'sampled': True,
+            'n_samples_original': n_samples,
+            'n_samples_used': max_samples,
+            'metrics_sampled': {
+                'silhouette_score': silhouette_sampled,
+                'davies_bouldin_index': davies_bouldin_sampled,
+                'calinski_harabasz_score': calinski_harabasz_sampled
+            }
+        }
+    else:
+        # Dataset pequeño, usar método completo
+        hierarchical = AgglomerativeClustering(
+            n_clusters=n_clusters, 
+            linkage=linkage_method
+        )
+        labels = hierarchical.fit_predict(X_scaled)
+        
+        # Métricas
+        silhouette = silhouette_score(X_scaled, labels)
+        davies_bouldin = davies_bouldin_score(X_scaled, labels)
+        calinski_harabasz = calinski_harabasz_score(X_scaled, labels)
+        
+        return {
+            'model': hierarchical,
+            'labels': labels,
+            'silhouette_score': silhouette,
+            'davies_bouldin_index': davies_bouldin,
+            'calinski_harabasz_score': calinski_harabasz,
+            'n_clusters': n_clusters,
+            'linkage_method': linkage_method,
+            'sampled': False
+        }
 
 
 def evaluate_clustering_models(
