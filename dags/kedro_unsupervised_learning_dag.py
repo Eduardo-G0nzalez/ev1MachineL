@@ -52,7 +52,6 @@ unsupervised_learning = BashOperator(
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=unsupervised_learning_pipeline',
     dag=dag,
     execution_timeout=timedelta(hours=2),  # Timeout de 2 horas para el pipeline completo
-    task_timeout=timedelta(hours=2),
 )
 
 # ============================================
