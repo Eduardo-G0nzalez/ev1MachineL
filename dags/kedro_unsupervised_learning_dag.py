@@ -51,6 +51,8 @@ unsupervised_learning = BashOperator(
     task_id='run_unsupervised_learning_pipeline',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=unsupervised_learning_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),  # Timeout de 2 horas para el pipeline completo
+    task_timeout=timedelta(hours=2),
 )
 
 # ============================================
@@ -61,6 +63,7 @@ generate_clustering_report = BashOperator(
     task_id='generate_clustering_report',
     bash_command='docker exec -w /app ml-letterboxd-pipeline python -c "import pandas as pd; import json; df = pd.read_csv(\'data/07_model_output/clustering_comparison.csv\'); print(\'\\n=== COMPARACIÓN DE MODELOS DE CLUSTERING ===\\n\'); print(df.to_string(index=False)); metrics = json.load(open(\'data/07_model_output/clustering_metrics.json\')); print(\'\\n=== MÉTRICAS DETALLADAS ===\\n\'); print(json.dumps(metrics, indent=2))"',
     dag=dag,
+    execution_timeout=timedelta(minutes=10),  # Timeout de 10 minutos para el reporte
 )
 
 # ============================================
@@ -71,4 +74,5 @@ generate_clustering_report = BashOperator(
 # 2. Generar reporte de clustering
 
 unsupervised_learning >> generate_clustering_report
+
 

@@ -36,6 +36,7 @@ prepare_regression = BashOperator(
     task_id='prepare_regression_data',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=regression_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),
 )
 
 # Entrenar modelos
@@ -43,6 +44,7 @@ train_models = BashOperator(
     task_id='train_regression_models',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=regression_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),
 )
 
 # Evaluar modelos
@@ -50,6 +52,7 @@ evaluate_models = BashOperator(
     task_id='evaluate_regression_models',
     bash_command='docker exec -w /app ml-letterboxd-pipeline python -c "print(\'Evaluación completada\')"',
     dag=dag,
+    execution_timeout=timedelta(minutes=10),
 )
 
 prepare_regression >> train_models >> evaluate_models

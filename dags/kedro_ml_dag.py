@@ -48,6 +48,7 @@ prepare_data = BashOperator(
     task_id='prepare_data',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=data_preparation_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=1),
 )
 
 # ============================================
@@ -57,6 +58,7 @@ run_eda = BashOperator(
     task_id='run_eda',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=eda_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=1),
 )
 
 # ============================================
@@ -66,6 +68,7 @@ train_classification = BashOperator(
     task_id='train_classification_models',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=classification_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),
 )
 
 # ============================================
@@ -75,6 +78,7 @@ train_regression = BashOperator(
     task_id='train_regression_models',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=regression_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),
 )
 
 # ============================================
@@ -84,6 +88,7 @@ evaluate_models = BashOperator(
     task_id='evaluate_all_models',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=ml_modeling_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=1),
 )
 
 # ============================================
@@ -93,6 +98,7 @@ unsupervised_learning = BashOperator(
     task_id='unsupervised_learning',
     bash_command='docker exec -w /app ml-letterboxd-pipeline kedro run --pipeline=unsupervised_learning_pipeline',
     dag=dag,
+    execution_timeout=timedelta(hours=2),  # Timeout de 2 horas para clustering y reducción dimensional
 )
 
 # ============================================
@@ -102,6 +108,7 @@ generate_report = BashOperator(
     task_id='generate_final_report',
     bash_command='docker exec -w /app ml-letterboxd-pipeline python scripts/generate_report.py',
     dag=dag,
+    execution_timeout=timedelta(minutes=30),
 )
 
 # ============================================
